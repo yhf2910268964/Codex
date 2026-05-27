@@ -3,6 +3,7 @@ package com.example.wcs.mqtt;
 import com.example.wcs.application.TelemetryPublisher;
 import com.example.wcs.domain.WcsMessage;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 /**
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
+@ConditionalOnProperty(name = "wcs.telemetry.mode", havingValue = "mqtt")
 public class MqttTelemetryPublisher implements TelemetryPublisher {
 
     /**

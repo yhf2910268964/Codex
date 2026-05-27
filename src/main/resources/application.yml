@@ -7,3 +7,21 @@ management:
     web:
       exposure:
         include: health,info,metrics
+
+rocketmq:
+  name-server: 127.0.0.1:9876
+  producer:
+    group: wcs-communication-producer
+
+wcs:
+  telemetry:
+    mode: rocketmq
+  rocketmq:
+    telemetry:
+      enabled: true
+      topic: wcs-telemetry
+      tag: command
+  netty:
+    host: 127.0.0.1
+    port: 9000
+    connect-timeout-millis: 3000

@@ -3,6 +3,7 @@ package com.example.wcs.tcp;
 import com.example.wcs.application.MessageDispatcher;
 import com.example.wcs.domain.ProtocolType;
 import com.example.wcs.domain.WcsMessage;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +12,10 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class TcpMessageDispatcher implements MessageDispatcher {
+
+    private final NettyCommandClient nettyCommandClient;
 
     /**
      * 过滤非 TCP 消息，并将 TCP 指令发送到设备通讯层。
@@ -28,7 +32,8 @@ public class TcpMessageDispatcher implements MessageDispatcher {
             return;
         }
 
-        log.info("[TCP] dispatch command={}, deviceId={}, payload={}",
-                message.command(), message.deviceId(), message.payload());
+        nettyCommandClient.send(message);
+        log.info("[TCP] dispatched command={}, deviceId={}, messageId={}",
+                message.command(), message.deviceId(), message.messageId());
     }
 }
